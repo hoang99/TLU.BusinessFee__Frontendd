@@ -338,7 +338,12 @@ export default class Nav extends Component {
             <li className="list-group-item list-group-item-action">
               <h4>Chức năng</h4>
             </li>
-            <Link style={{ textDecoration: "none" }} to="/quanlyphongban">
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/quanlyphongban"
+              exact
+              activeClassName="is-active"
+            >
               <li
                 className="list-group-item list-group-item-action"
                 style={{ color: "#007bff" }}

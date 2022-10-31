@@ -220,10 +220,16 @@ class DuyetDeXuatThanhToan extends Component {
     var { data, searchItem } = this.state;
     var dataSearch = [];
     var layMaChuyenCongTac = [];
+    console.log(data);
+
     data.forEach((item) => {
       if (
-        item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1
+        item.maDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.thoiGianDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.tinhTrang?.toLowerCase().indexOf(searchItem) !== -1 ||
+        (item.lyDo && item.lyDo?.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
         layMaChuyenCongTac.push(item.maChuyenCongTac);
@@ -574,8 +580,8 @@ class DuyetDeXuatThanhToan extends Component {
       return <th>Thao tác</th>;
     }
   };
+
   render() {
-    console.log(this.state.dataUsers);
     return (
       <div>
         <Header></Header>

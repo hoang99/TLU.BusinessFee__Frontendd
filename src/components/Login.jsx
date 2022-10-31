@@ -30,8 +30,6 @@ class login extends Component {
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data);
-        alert("Đăng nhập thành công");
-
         window.location.reload();
       })
       .catch((err) => {

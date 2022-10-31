@@ -464,9 +464,16 @@ class QuanLyDeXuatThanhToan extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1
+        item.maDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
+        (item.tenNhanVien &&
+          item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.lydo && item.lydo.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.thoiGianDeXuat &&
+          item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tinhTrang &&
+          item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

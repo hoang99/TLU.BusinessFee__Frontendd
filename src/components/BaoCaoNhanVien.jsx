@@ -716,10 +716,15 @@ class BaoCaoNhanVien extends Component {
       />
     );
   };
-
+  handleYearReport = () => {
+    const curYear = new Date().getFullYear();
+    const arrYear = [];
+    for (var i = curYear; i >= curYear - 5; i--) {
+      arrYear.push(i);
+    }
+    return arrYear.map((e) => <option>{e}</option>);
+  };
   render() {
-    console.log(this.state.dataDeXuat);
-
     return (
       <div>
         <Header></Header>
@@ -741,11 +746,7 @@ class BaoCaoNhanVien extends Component {
                     onChange={(event) => this.onChangeChonThoiGian(event)}
                   >
                     <option selected>Chọn thời gian</option>
-                    <option>2021</option>
-                    <option>2020</option>
-                    <option>2019</option>
-                    <option>2018</option>
-                    <option>2017</option>
+                    {this.handleYearReport()}
                   </select>
                 </div>
                 {/* <div className="form-group ">
