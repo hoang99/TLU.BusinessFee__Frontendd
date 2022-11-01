@@ -110,9 +110,7 @@ class QuanLyNhanVien extends Component {
   };
   hienThiTenChucVu = () => {
     return this.state.dataChucVu.map((value, key) => (
-      <option
-        selected={value.tenChucVu === this.state.hienThiSuaUer?.tenChucVu}
-      >
+      <option selected={value.roleName === this.state.hienThiSuaUer?.tenChucVu}>
         {value.roleName}
       </option>
     ));

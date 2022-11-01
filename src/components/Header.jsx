@@ -19,7 +19,8 @@ class Header extends Component {
   }
 
   logout = () => {
-    window.confirm("Bạn có muốn đăng xuất") && localStorage.removeItem("token");
+    window.confirm("Bạn có muốn đăng xuất?") &&
+      localStorage.removeItem("token");
     // alert("Đăng xuất thành công");
   };
   componentDidMount() {
