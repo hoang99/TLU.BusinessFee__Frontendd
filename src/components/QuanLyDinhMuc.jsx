@@ -94,12 +94,20 @@ class QuanLyDinhMuc extends Component {
   }
   hienThiTenCapBac = () => {
     return this.state.dataCapBac.map((value, key) => (
-      <option>{value.tenCapBac}</option>
+      <option
+        selected={value.tenCapBac === this.state.hienThiSuaUer?.tenCapBac}
+      >
+        {value.tenCapBac}
+      </option>
     ));
   };
   hienThiTenChiPhi = () => {
     return this.state.dataChiPhi.map((value, key) => (
-      <option>{value.tenChiPhi}</option>
+      <option
+        selected={value.tenChiPhi === this.state.hienThiSuaUer?.tenChiPhi}
+      >
+        {value.tenChiPhi}
+      </option>
     ));
   };
 

@@ -712,133 +712,10 @@ class QuanLyDeXuatThanhToan extends Component {
                                   className=" btn btn-primary fa fa-edit dexuat"
                                   data-toggle="modal"
                                   data-target="#trangThaiMoFormThemMoiNhanVien"
-                                  style={{ fontSize: "22px" }}
+                                  style={{ fontSize: "18px" }}
                                 >
                                   Đề xuất
                                 </div>
-
-                                {/* begin Form nhan vien them mới đề xuất */}
-                                <div
-                                  className="modal fade"
-                                  id="trangThaiMoFormThemMoiNhanVien"
-                                  tabIndex={-1}
-                                  role="dialog"
-                                  aria-labelledby="exampleModalScrollableTitle"
-                                  /*data-backdrop="static"*/ aria-hidden="true"
-                                >
-                                  <div
-                                    className="modal-dialog modal-cct modal-dialog-scrollable"
-                                    role="document"
-                                  >
-                                    <div className="modal-content">
-                                      <div className="modal-header">
-                                        <h5
-                                          className="modal-title"
-                                          id="exampleModalScrollableTitle"
-                                        >
-                                          Đề xuất
-                                        </h5>
-                                      </div>
-                                      <div className="modal-body">
-                                        {/* begin them moi đề xuất */}
-                                        <div className="card text-center">
-                                          <div className="card-header">
-                                            <h4 className="disabled">
-                                              Đề xuất
-                                            </h4>
-                                          </div>
-                                          <div className="card-body">
-                                            <div className="form-group">
-                                              <div className="form-group">
-                                                <div className="row">
-                                                  <div className="col-6">
-                                                    <p
-                                                      style={{
-                                                        textAlign: "left",
-                                                      }}
-                                                    >
-                                                      Chi phí
-                                                    </p>
-                                                    <select
-                                                      class="form-select form-control"
-                                                      aria-label="Default select example"
-                                                      name="tenChiPhi"
-                                                      onChange={(event) =>
-                                                        this.onChangeChiPhi(
-                                                          event
-                                                        )
-                                                      }
-                                                    >
-                                                      <option disabled selected>
-                                                        Chọn chi phí
-                                                      </option>
-                                                      {this.hienThiTenChiPhi()}
-                                                    </select>
-                                                    <p
-                                                      style={{
-                                                        textAlign: "left",
-                                                      }}
-                                                    >
-                                                      Định mức
-                                                    </p>
-                                                    {this.DINHMUC()}
-                                                  </div>
-                                                  <div className="col-6">
-                                                    <p
-                                                      style={{
-                                                        textAlign: "left",
-                                                      }}
-                                                    >
-                                                      Số tiền chi tiêu
-                                                    </p>
-                                                    <input
-                                                      type="text"
-                                                      className="form-control"
-                                                      id
-                                                      aria-describedby="helpId"
-                                                      placeholder="Số tiền chi tiêu"
-                                                      name="soTienChiTieu"
-                                                      onChange={(value) =>
-                                                        this.onChange(value)
-                                                      }
-                                                    />
-
-                                                    <p
-                                                      style={{
-                                                        textAlign: "left",
-                                                      }}
-                                                    >
-                                                      Đơn vị
-                                                    </p>
-                                                    {this.hienThiDonVi()}
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        {/* end  them moi đề xuất */}
-                                      </div>
-                                      <div className="modal-footer">
-                                        <button
-                                          type="button"
-                                          className="btn btn-secondary"
-                                          data-dismiss="modal"
-                                        >
-                                          Hủy
-                                        </button>
-                                        <button
-                                          type="button"
-                                          className="btn btn-primary"
-                                          onClick={() => this.themMoiDeXuat()}
-                                        >
-                                          Thêm mới
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* end form nhân viên them moi đề xuất */}
                               </div>
                               {/* end đề xuất */}
 
@@ -904,6 +781,122 @@ class QuanLyDeXuatThanhToan extends Component {
               {/* end Form thêm mới đề xuất thanh toán */}
             </div>
 
+            {/* begin Form nhan vien them mới đề xuất */}
+            <div
+              className="modal fade"
+              id="trangThaiMoFormThemMoiNhanVien"
+              tabIndex={-1}
+              role="dialog"
+              aria-labelledby="trangThaiMoFormThemMoiNhanVien"
+              /*data-backdrop="static"*/ aria-hidden="true"
+            >
+              <div
+                className="modal-dialog modal-cct modal-dialog-scrollable"
+                role="document"
+              >
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5
+                      className="modal-title"
+                      id="exampleModalScrollableTitle"
+                    >
+                      Đề xuất
+                    </h5>
+                  </div>
+                  <div className="modal-body">
+                    {/* begin them moi đề xuất */}
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <h4 className="disabled">Đề xuất</h4>
+                      </div>
+                      <div className="card-body">
+                        <div className="form-group">
+                          <div className="form-group">
+                            <div className="row">
+                              <div className="col-6">
+                                <p
+                                  style={{
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  Chi phí
+                                </p>
+                                <select
+                                  class="form-select form-control"
+                                  aria-label="Default select example"
+                                  name="tenChiPhi"
+                                  onChange={(event) =>
+                                    this.onChangeChiPhi(event)
+                                  }
+                                >
+                                  <option disabled selected>
+                                    Chọn chi phí
+                                  </option>
+                                  {this.hienThiTenChiPhi()}
+                                </select>
+                                <p
+                                  style={{
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  Định mức
+                                </p>
+                                {this.DINHMUC()}
+                              </div>
+                              <div className="col-6">
+                                <p
+                                  style={{
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  Số tiền chi tiêu
+                                </p>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id
+                                  aria-describedby="helpId"
+                                  placeholder="Số tiền chi tiêu"
+                                  name="soTienChiTieu"
+                                  onChange={(value) => this.onChange(value)}
+                                />
+
+                                <p
+                                  style={{
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  Đơn vị
+                                </p>
+                                {this.hienThiDonVi()}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* end  them moi đề xuất */}
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => this.themMoiDeXuat()}
+                    >
+                      Thêm mới
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* end form nhân viên them moi đề xuất */}
             <div
               className="row "
               style={{ width: "101%", height: "600px", overflow: "auto" }}
