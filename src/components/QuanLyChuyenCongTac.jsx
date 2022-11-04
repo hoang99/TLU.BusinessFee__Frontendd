@@ -24,7 +24,7 @@ class QuanLyChuyenCongTac extends Component {
       hienThiSuaUer: [],
       dataNhanVienCongTac: [],
       layMaChuyenCongTac: [],
-      layDataChiTiet: [],
+      layDataChiTiet: {},
       dataUsers: [],
     };
   }
@@ -253,15 +253,11 @@ class QuanLyChuyenCongTac extends Component {
         layMaChuyenCongTac.push(item.maChuyenCongTac);
       }
     });
-    // this.setState({ layMaChuyenCongTac: layMaChuyenCongTac })
-
     var getDataNhanVienCongTac = [];
     this.state.dataNhanVienCongTac.forEach((item) => {
       if (item.maChuyenCongTac === this.state.layMaChuyenCongTac)
         getDataNhanVienCongTac.push(item);
     });
-    // console.log(getDataNhanVienCongTac);
-
     return dataSearch.map((value, key) => (
       <tr className="tr__canGiua">
         {/* <td>đã thực hiện</td> */}
@@ -408,9 +404,11 @@ class QuanLyChuyenCongTac extends Component {
                                   <th>STT</th>
                                   <th>Tên chuyến CT</th>
                                   <th>Tên nhân viên</th>
-                                  <th>Thao tác</th>
+                                  {this.state.layDataChiTiet.trangThai ===
+                                    "Chua thuc hien" && <th>Thao tác</th>}
                                 </tr>
                               </thead>
+                              {console.log(this.state.layDataChiTiet)}
                               <tbody>
                                 {getDataNhanVienCongTac.map((value, key) => (
                                   <tr className="tr__canGiua">
@@ -418,21 +416,24 @@ class QuanLyChuyenCongTac extends Component {
                                     <td>{key + 1}</td>
                                     <td>{value.maNhanVien}</td>
                                     <td>{value.tenNhanVien}</td>
-                                    <td>
-                                      <div className="btn btn-danger btn-group ml-2">
-                                        <div
-                                          className="fa fa-edit"
-                                          onClick={() =>
-                                            this.onDeleteNhanVienCongTac(
-                                              value.maNhanVien
-                                            )
-                                          }
-                                        >
-                                          {" "}
-                                          Xóa
+                                    {this.state.layDataChiTiet.trangThai ===
+                                      "Chua thuc hien" && (
+                                      <td>
+                                        <div className="btn btn-danger btn-group ml-2 w-100">
+                                          <div
+                                            className="fa fa-edit"
+                                            onClick={() =>
+                                              this.onDeleteNhanVienCongTac(
+                                                value.maNhanVien
+                                              )
+                                            }
+                                          >
+                                            {" "}
+                                            Xóa
+                                          </div>
                                         </div>
-                                      </div>
-                                    </td>
+                                      </td>
+                                    )}
                                   </tr>
                                 ))}
                               </tbody>
@@ -641,27 +642,22 @@ class QuanLyChuyenCongTac extends Component {
           </div>
           {/* end Form sửa */}
           {value.trangThai === "Chua thuc hien" ? (
-            <div>
-              <div className="btn btn-warning btn-group">
-                <div
-                  className="fa fa-edit"
-                  data-toggle="modal"
-                  data-target="#sua"
-                  onClick={() => this.layDataSua(value)}
-                >
-                  Sửa
-                </div>
-              </div>
-              <div className="btn btn-danger btn-group ml-2">
-                <div
-                  className="fas fa-ban"
-                  onClick={() => this.onDelete(value.maChuyenCongTac)}
-                >
-                  {" "}
-                  Xóa
-                </div>
-              </div>
-            </div>
+            <>
+              <span
+                className="btn btn-warning btn-group fa fa-edit"
+                data-toggle="modal"
+                data-target="#sua"
+                onClick={() => this.layDataSua(value)}
+              >
+                Sửa
+              </span>
+              <span
+                className="btn btn-danger btn-group fas fa-ban ml-2"
+                onClick={() => this.onDelete(value.maChuyenCongTac)}
+              >
+                Xóa
+              </span>
+            </>
           ) : null}
         </td>
       );
@@ -673,7 +669,7 @@ class QuanLyChuyenCongTac extends Component {
       this.state.dataUsers.roleID === "RL05" ||
       this.state.dataUsers.roleID === "RL04"
     ) {
-      return <th>Thao tác</th>;
+      return <th style={{ minWidth: "180px" }}>Thao tác</th>;
     }
   };
 
@@ -857,8 +853,8 @@ class QuanLyChuyenCongTac extends Component {
                       <th>Thời gian kết thúc</th>
                       <th>Địa điểm</th>
                       <th>Mô tả</th>
-                      <th>Chi tiết</th>
-                      <th>Trạng thái</th>
+                      <th style={{ minWidth: "80px" }}>Chi tiết</th>
+                      <th style={{ minWidth: "135px" }}>Trạng thái</th>
                       {/* <th>Thao tác</th> */}
                       {this.hienThiThaoTac()}
                     </tr>

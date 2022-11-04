@@ -914,7 +914,7 @@ class QuanLyDeXuatThanhToan extends Component {
                       <th>Tổng chi phí</th>
                       <th>Tình trạng</th>
                       <th>Lý do</th>
-                      <th>Thao tác</th>
+                      <th style={{ minWidth: "110px" }}>Thao tác</th>
                     </tr>
                   </thead>
                   <tbody>{this.printData()}</tbody>
