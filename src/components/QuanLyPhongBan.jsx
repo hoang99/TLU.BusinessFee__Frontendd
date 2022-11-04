@@ -242,6 +242,7 @@ class QuanLyPhongBan extends Component {
                               className="form-control"
                               placeholder="Mã phòng ban"
                               name="maPhongBan"
+                              disabled="true"
                               Value={this.state.hienThiSuaUer.maPhongBan}
                               onChange={(event) => this.onChange(event)}
                             />

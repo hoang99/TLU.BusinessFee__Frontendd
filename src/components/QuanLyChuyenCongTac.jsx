@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { connect } from "react-redux";
 import * as actions from "./../actions/actions";
+import moment from "moment/moment";
 
 class QuanLyChuyenCongTac extends Component {
   constructor(props) {
@@ -484,6 +485,7 @@ class QuanLyChuyenCongTac extends Component {
     }
   };
   hienThiBtnSua_Xoa = (value) => {
+    console.log(this.state.hienThiSuaUer.ngayBatDau);
     if (
       this.state.dataUsers.roleID === "RL01" ||
       this.state.dataUsers.roleID === "RL05" ||
@@ -555,25 +557,28 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Địa điểm"
                                 name="diaDiem"
-                                Value={this.state.hienThiSuaUer.diaDiem}
+                                value={this.state.hienThiSuaUer.diaDiem}
                                 onChange={(value) => this.onChange(value)}
                               />
                             </div>
                             <div className="col-6">
-                              {console.log(this.state.hienThiSuaUer.ngayBatDau)}
                               <p style={{ textAlign: "left" }}>
                                 Thời gian bắt đầu
                               </p>
+
                               <input
                                 type="date"
                                 className="form-control"
-                                id
+                                id="datetimepicker1"
                                 aria-describedby="helpId"
                                 placeholder="Thời gian bắt đầu"
                                 name="ngayBatDau"
-                                Value={this.state.hienThiSuaUer.ngayBatDau}
+                                value={moment(
+                                  this.state.hienThiSuaUer.ngayBatDau
+                                ).format("YYYY-MM-DD")}
                                 onChange={(value) => this.onChange(value)}
                               />
+
                               <p style={{ textAlign: "left" }}>
                                 Thời gian kết thúc
                               </p>
@@ -584,7 +589,9 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Thời gian kết thúc"
                                 name="ngayKetThuc"
-                                Value={this.state.hienThiSuaUer.ngayKetThuc}
+                                value={moment(
+                                  this.state.hienThiSuaUer.ngayKetThuc
+                                ).format("YYYY-MM-DD")}
                                 onChange={(value) => this.onChange(value)}
                               />
                               <p style={{ textAlign: "left" }}>Mô tả</p>
@@ -669,8 +676,8 @@ class QuanLyChuyenCongTac extends Component {
       return <th>Thao tác</th>;
     }
   };
+
   render() {
-    // console.log(this.state.dataNhanVienCongTac);
     return (
       <div>
         <Header></Header>
