@@ -545,7 +545,7 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Tên chuyến công tác"
                                 name="tenChuyenCongTac"
-                                Value={
+                                defaultValue={
                                   this.state.hienThiSuaUer.tenChuyenCongTac
                                 }
                                 onChange={(value) => this.onChange(value)}
@@ -555,10 +555,10 @@ class QuanLyChuyenCongTac extends Component {
                                 type="text"
                                 className="form-control"
                                 id
-                                aria-describedby="helpId"
+                                // aria-describedby="helpId"
                                 placeholder="Địa điểm"
                                 name="diaDiem"
-                                value={this.state.hienThiSuaUer.diaDiem}
+                                defaultValue={this.state.hienThiSuaUer.diaDiem}
                                 onChange={(value) => this.onChange(value)}
                               />
                             </div>
@@ -574,7 +574,7 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Thời gian bắt đầu"
                                 name="ngayBatDau"
-                                value={moment(
+                                defaultValue={moment(
                                   this.state.hienThiSuaUer.ngayBatDau
                                 ).format("YYYY-MM-DD")}
                                 onChange={(value) => this.onChange(value)}
@@ -586,13 +586,14 @@ class QuanLyChuyenCongTac extends Component {
                               <input
                                 type="date"
                                 className="form-control"
-                                id
+                                id="datetimepicker2"
                                 aria-describedby="helpId"
                                 placeholder="Thời gian kết thúc"
                                 name="ngayKetThuc"
-                                value={moment(
+                                defaultValue={moment(
                                   this.state.hienThiSuaUer.ngayKetThuc
                                 ).format("YYYY-MM-DD")}
+                                data-date-format="dd/mm/yyyy"
                                 onChange={(value) => this.onChange(value)}
                               />
                               <p style={{ textAlign: "left" }}>Mô tả</p>
@@ -603,7 +604,7 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Mô tả"
                                 name="moTa"
-                                Value={this.state.hienThiSuaUer.moTa}
+                                defaultValue={this.state.hienThiSuaUer.moTa}
                                 onChange={(value) => this.onChange(value)}
                               />
                             </div>

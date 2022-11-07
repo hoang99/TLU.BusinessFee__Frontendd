@@ -21,6 +21,7 @@ class Header extends Component {
   logout = () => {
     window.confirm("Bạn có muốn đăng xuất?") &&
       localStorage.removeItem("token");
+    window.location.reload();
     // alert("Đăng xuất thành công");
   };
   componentDidMount() {
