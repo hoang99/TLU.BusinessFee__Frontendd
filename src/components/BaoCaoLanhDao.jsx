@@ -1,17 +1,113 @@
-import React, { Component } from "react";
 import axios from "axios";
-import Nav from "./Nav";
-import Header from "./Header";
-import Footer from "./Footer";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "./../actions/actions";
-import ReactToPdf from "react-to-pdf";
-const ref = React.createRef();
-const options = {
-  orientation: "landscape",
-  // unit: 'in',
-  // format: [1, 1]
-};
+import Footer from "./Footer";
+import Header from "./Header";
+import Nav from "./Nav";
+
+import {
+  Document,
+  Font,
+  Image,
+  Page,
+  PDFDownloadLink,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
+import myIcon from "../img/logo1.jpg";
+
+Font.register({
+  family: "Roboto",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
+});
+
+const styles = StyleSheet.create({
+  page: {
+    fontFamily: "Roboto",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    textAlign: "center",
+    margin: 10,
+  },
+  textRight: {
+    alignItems: "center",
+  },
+  textLeft: {
+    marginRight: 100,
+    alignItems: "center",
+  },
+  image: {
+    marginTop: 10,
+    width: 100,
+    height: 100,
+    textAlign: "center",
+  },
+
+  textCenter: {
+    textAlign: "center",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  table: {
+    marginTop: 20,
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row",
+  },
+  tableCol: {
+    width: "11.25%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  colWidth: {
+    width: "5%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  tableCell: {
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
+  },
+  footer: {
+    position: "relative",
+  },
+  date: {
+    position: "absolute",
+    fontSize: 10,
+    right: 0,
+    padding: "10px 20px",
+  },
+  approval: {
+    left: 0,
+    fontSize: 10,
+    position: "absolute",
+    padding: "10px 20px",
+  },
+  createdReport: {
+    padding: "10px 20px",
+  },
+});
+
 class DuyetDeXuatThanhToan extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +139,119 @@ class DuyetDeXuatThanhToan extends Component {
       time: "",
     };
   }
-
+  myDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <View style={styles.textLeft}>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              BỘ GIÁO DỤC VÀ ĐÀO TẠO
+            </Text>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              Trường đại học Kinh tế quốc dân
+            </Text>
+            <Image style={styles.image} src={myIcon} />
+          </View>
+          <View style={styles.textRight}>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              CỘNG HÒA XÃ HỘI CHU NGHĨA VIỆT NAM
+            </Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: "bold",
+                textDecoration: "underline",
+              }}
+            >
+              Độc lập - Tự do - Hạnh phúc
+            </Text>
+          </View>
+        </View>
+        <Text style={styles.textCenter}>Báo cáo thống kê</Text>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}>STT</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Mã đề xuất</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tên CTT</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Nhân viên DX</Text>
+            </View>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}>Số NV</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Ngày bắt đầu</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Ngày kết thúc</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tổng chi phí</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tình trạng</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Lý do</Text>
+            </View>
+          </View>
+          {this.state.data.map((value, key) => {
+            return (
+              <View style={styles.tableRow}>
+                <View style={styles.colWidth}>
+                  <Text style={styles.tableCell}>{key + 1}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.maDeXuat} </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tenChuyenCongTac}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tenNhanVien}</Text>
+                </View>
+                <View style={styles.colWidth}>
+                  <Text style={styles.tableCell}>{value.soNhanVien}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.ngayBatDau}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.ngayKetThuc}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tongChiPhi}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tinhTrang}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.lyDo}</Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
+        <View style={styles.footer}>
+          <View style={styles.date}>
+            <Text>{`Ngày ${new Date().getDate()}, tháng ${
+              new Date().getMonth() + 1
+            }, năm ${new Date().getFullYear()}`}</Text>
+            <Text style={styles.createdReport}>Người tạo báo cáo</Text>
+          </View>
+          <View style={styles.approval}>
+            <Text>Người phê duyệt</Text>
+          </View>
+        </View>
+      </Page>
+    </Document>
+  );
   componentDidMount() {
     axios({
       method: "get",
@@ -437,6 +645,7 @@ class DuyetDeXuatThanhToan extends Component {
     }
     return arrYear.map((e) => <option>{e}</option>);
   };
+
   render() {
     return (
       <div>
@@ -459,38 +668,33 @@ class DuyetDeXuatThanhToan extends Component {
                   {this.handleYearReport()}
                 </select>
               </div>
-
-              {/* <div className="form-group ">
-                                <div className="input-group">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text" >
-                                            <i class="fas fa-search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" className="form-control" placeholder="Search ..." name="searchItem" value={this.state.searchItem} onChange={(event) => this.onChange(event)} />
-                                </div>
-                            </div> */}
-              {/* end search */}
-              <ReactToPdf
-                targetRef={ref}
-                filename="baocao.pdf"
-                options={options}
-                x={0.5}
-                y={0.5}
-                scale={0.7}
+              <div
+                style={{
+                  marginRight: 44,
+                  marginTop: 8,
+                }}
               >
-                {({ toPdf }) => (
-                  // <button onClick={toPdf}>Generate pdf</button>
-                  <div className="btn btn-primary themmoi " onClick={toPdf}>
-                    Xuất file PDF
-                  </div>
-                )}
-              </ReactToPdf>
+                <button className="btn btn-primary  ">
+                  <PDFDownloadLink
+                    style={{
+                      color: "#fff",
+                      textDecoration: "none",
+                      fontSize: 16,
+                    }}
+                    document={this.myDocument()}
+                    fileName="report.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Loading ..." : "Export PDF"
+                    }
+                  </PDFDownloadLink>
+                </button>
+              </div>
             </div>
             <div
               className="row mt-3"
               style={{ width: "101%", height: "600px", overflow: "auto" }}
-              ref={ref}
+              // ref={ref}
             >
               <div className="col ">
                 <table className="table table-striped table-hover">
