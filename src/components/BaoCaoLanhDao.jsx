@@ -5,6 +5,7 @@ import * as actions from "./../actions/actions";
 import Footer from "./Footer";
 import Header from "./Header";
 import Nav from "./Nav";
+import moment from "moment/moment";
 
 import {
   Document,
@@ -136,7 +137,6 @@ class DuyetDeXuatThanhToan extends Component {
       layMaCTT: "",
       dataDuyet: [],
       lyDo: "",
-      time: "",
     };
   }
   myDocument = () => (
@@ -154,7 +154,7 @@ class DuyetDeXuatThanhToan extends Component {
           </View>
           <View style={styles.textRight}>
             <Text style={{ fontSize: 13, fontWeight: "bold" }}>
-              CỘNG HÒA XÃ HỘI CHU NGHĨA VIỆT NAM
+              CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
             </Text>
             <Text
               style={{
@@ -226,7 +226,9 @@ class DuyetDeXuatThanhToan extends Component {
                   <Text style={styles.tableCell}>{value.ngayKetThuc}</Text>
                 </View>
                 <View style={styles.tableCol}>
-                  <Text style={styles.tableCell}>{value.tongChiPhi}</Text>
+                  <Text style={styles.tableCell}>
+                    {value.tongChiPhi.toLocaleString()}
+                  </Text>
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{value.tinhTrang}</Text>
@@ -237,7 +239,44 @@ class DuyetDeXuatThanhToan extends Component {
               </View>
             );
           })}
+          <View style={styles.tableRow}>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tổng chi phí</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {this.state.data
+                  .reduce((sum, value) => (sum += value.tongChiPhi), 0)
+                  .toLocaleString()}
+              </Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+          </View>
         </View>
+
         <View style={styles.footer}>
           <View style={styles.date}>
             <Text>{`Ngày ${new Date().getDate()}, tháng ${
@@ -403,31 +442,6 @@ class DuyetDeXuatThanhToan extends Component {
         window.location.reload();
       })
       .catch((err) => this.props.alertOn_TrangThaiDuyetThatBai(err));
-
-    console.log(this.state.data);
-
-    // var dataDuyet = [];
-    // dataDuyet.maDeXuat = value.maDeXuat //this.state.hienThiSuaUer.maPhongBan là data onChange nhập vào
-    // dataDuyet.tenChuyenCongTac = value.tenChuyenCongTac;
-    // dataDuyet.soNhanVien = value.soNhanVien;
-    // dataDuyet.thoiGianDeXuat = value.thoiGianDeXuat;
-    // dataDuyet.tongChiPhi = value.tongChiPhi;
-    // dataDuyet.lyDo = value.lyDo;
-    // dataDuyet.tinhTrang = value.tinhTrang;
-    // console.log(dataDuyet);
-
-    // // console.log(dataSua);
-    // this.setState({ dataDuyet: dataDuyet });
-    // this.state.data.forEach((value) => {
-    //     if (value.maDeXuat === dataDuyet.maDeXuat) {
-    //         value.tenChuyenCongTac = dataDuyet.tenChuyenCongTac;
-    //         value.soNhanVien = dataDuyet.soNhanVien;
-    //         value.thoiGianDeXuat = dataDuyet.thoiGianDeXuat;
-    //         value.tongChiPhi = dataDuyet.tongChiPhi;
-    //         value.lyDo = dataDuyet.lyDo;
-    //         value.tinhTrang = dataDuyet.tinhTrang;
-    //     }
-    // })
   };
   layMaTuChoi = (maDeXuat) => {
     console.log(maDeXuat);
@@ -454,53 +468,47 @@ class DuyetDeXuatThanhToan extends Component {
 
     console.log(this.state.data);
   };
-  onChangeChonThoiGian = (event) => {
-    var name = event.target.name;
-    var value = event.target.value;
-    console.log(name);
-    console.log(value);
-    this.setState({
-      [name]: value,
-    });
 
-    this.setState({ time: value });
-    // var selectTime = [];
-
-    // this.state.data.forEach((item) => {
-    //     if (item.thoiGianDeXuat.indexOf(value) !== -1) {
-    //         selectTime.push(item)
-    //     }
-    // })
-    // console.log(selectTime)
-    // console.log(this.state.data);
-  };
   printData = () => {
     var { data, searchItem } = this.state;
     var dataSearch = [];
     var layMaChuyenCongTac = [];
     //tìm kiếm
     data.forEach((item) => {
-      if (item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) {
+      if (
+        (item.maDeXuat &&
+          item.maDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenNhanVien &&
+          item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.ngayBatDau &&
+          moment(item.ngayBatDau)
+            .format("YYYY")
+            .toString()
+            .indexOf(searchItem) !== -1) ||
+        (item.ngayKetThuc &&
+          moment(item.ngayKetThuc)
+            .format("YYYY")
+            .toString()
+            .indexOf(searchItem) !== -1) ||
+        (item.tongChiPhi &&
+          item.tongChiPhi.toString().toLowerCase().indexOf(searchItem) !==
+            -1) ||
+        (item.tinhTrang &&
+          item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.lyDo && item.lyDo.toLowerCase().indexOf(searchItem) !== -1)
+      ) {
         dataSearch.push(item);
         layMaChuyenCongTac.push(item.maChuyenCongTac);
       }
     });
-    // console.log(layMaChuyenCongTac);
     var getDataNhanVienCongTac = [];
     this.state.dataNhanVienCongTac.forEach((item) => {
       if (item.maChuyenCongTac === this.state.layMaChuyenCongTac)
         getDataNhanVienCongTac.push(item);
     });
-    // console.log(getDataNhanVienCongTac);
-    // tìm kiếm theo select thời gian
-    var selectTime = [];
-    this.state.data.forEach((item) => {
-      if (item.ngayBatDau.indexOf(this.state.time) !== -1) {
-        selectTime.push(item);
-      }
-    });
-
-    return selectTime.map((value, key) => (
+    return dataSearch.map((value, key) => (
       <tr className="tr__canGiua">
         {/* <td>đã thực hiện</td> */}
         <td>{key + 1}</td>
@@ -637,15 +645,6 @@ class DuyetDeXuatThanhToan extends Component {
     ));
   };
 
-  handleYearReport = () => {
-    const curYear = new Date().getFullYear();
-    const arrYear = [];
-    for (var i = curYear; i >= curYear - 5; i--) {
-      arrYear.push(i);
-    }
-    return arrYear.map((e) => <option>{e}</option>);
-  };
-
   render() {
     return (
       <div>
@@ -657,16 +656,22 @@ class DuyetDeXuatThanhToan extends Component {
               <i></i> Báo cáo
             </div>
             <div className="d-flex justify-content-between">
-              <div style={{ width: "20%" }}>
-                <select
-                  class="form-select form-control"
-                  aria-label="Default select example"
-                  name="chonThoiGian"
-                  onChange={(event) => this.onChangeChonThoiGian(event)}
-                >
-                  <option selected>Chọn thời gian</option>
-                  {this.handleYearReport()}
-                </select>
+              <div className="form-group filter">
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search ..."
+                    name="searchItem"
+                    value={this.state.searchItem}
+                    onChange={(event) => this.onChange(event)}
+                  />
+                </div>
               </div>
               <div
                 style={{
@@ -694,7 +699,6 @@ class DuyetDeXuatThanhToan extends Component {
             <div
               className="row mt-3"
               style={{ width: "101%", height: "600px", overflow: "auto" }}
-              // ref={ref}
             >
               <div className="col ">
                 <table className="table table-striped table-hover">

@@ -5,13 +5,109 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { connect } from "react-redux";
 import * as actions from "./../actions/actions";
-import ReactToPdf from "react-to-pdf";
-const ref = React.createRef();
-const options = {
-  orientation: "landscape",
-  // unit: 'in',
-  // format: [1, 1]
-};
+
+import {
+  Document,
+  Font,
+  Image,
+  Page,
+  PDFDownloadLink,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
+import myIcon from "../img/logo1.jpg";
+import moment from "moment/moment";
+
+Font.register({
+  family: "Roboto",
+  src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf",
+});
+
+const styles = StyleSheet.create({
+  page: {
+    fontFamily: "Roboto",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    textAlign: "center",
+    margin: 10,
+  },
+  textRight: {
+    alignItems: "center",
+  },
+  textLeft: {
+    marginRight: 100,
+    alignItems: "center",
+  },
+  image: {
+    marginTop: 10,
+    width: 100,
+    height: 100,
+    textAlign: "center",
+  },
+
+  textCenter: {
+    textAlign: "center",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  table: {
+    marginTop: 20,
+    display: "table",
+    width: "auto",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    margin: "auto",
+    flexDirection: "row",
+  },
+  tableCol: {
+    width: "11.25%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  colWidth: {
+    width: "5%",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  tableCell: {
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
+  },
+  footer: {
+    position: "relative",
+  },
+  date: {
+    position: "absolute",
+    fontSize: 10,
+    right: 0,
+    padding: "10px 20px",
+  },
+  approval: {
+    left: 0,
+    fontSize: 10,
+    position: "absolute",
+    padding: "10px 20px",
+  },
+  createdReport: {
+    padding: "10px 20px",
+  },
+});
 class DuyetDeXuatThanhToan extends Component {
   constructor(props) {
     super(props);
@@ -40,10 +136,160 @@ class DuyetDeXuatThanhToan extends Component {
       layMaCTT: "",
       dataDuyet: [],
       lyDo: "",
-      time: "",
     };
   }
+  myDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <View style={styles.textLeft}>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              BỘ GIÁO DỤC VÀ ĐÀO TẠO
+            </Text>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              Trường đại học Kinh tế quốc dân
+            </Text>
+            <Image style={styles.image} src={myIcon} />
+          </View>
+          <View style={styles.textRight}>
+            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+              CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            </Text>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: "bold",
+                textDecoration: "underline",
+              }}
+            >
+              Độc lập - Tự do - Hạnh phúc
+            </Text>
+          </View>
+        </View>
+        <Text style={styles.textCenter}>Báo cáo thống kê</Text>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}>STT</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Mã đề xuất</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tên CTT</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Nhân viên DX</Text>
+            </View>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}>Số NV</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Ngày bắt đầu</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Ngày kết thúc</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tổng chi phí</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tình trạng</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Lý do</Text>
+            </View>
+          </View>
+          {this.state.data.map((value, key) => {
+            return (
+              <View style={styles.tableRow}>
+                <View style={styles.colWidth}>
+                  <Text style={styles.tableCell}>{key + 1}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.maDeXuat} </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tenChuyenCongTac}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tenNhanVien}</Text>
+                </View>
+                <View style={styles.colWidth}>
+                  <Text style={styles.tableCell}>{value.soNhanVien}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.ngayBatDau}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.ngayKetThuc}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>
+                    {value.tongChiPhi.toLocaleString()}
+                  </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.tinhTrang}</Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.lyDo}</Text>
+                </View>
+              </View>
+            );
+          })}
+          <View style={styles.tableRow}>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Tổng chi phí</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.colWidth}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>
+                {this.state.data
+                  .reduce((sum, value) => (sum += value.tongChiPhi), 0)
+                  .toLocaleString()}
+              </Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
+            </View>
+          </View>
+        </View>
 
+        <View style={styles.footer}>
+          <View style={styles.date}>
+            <Text>{`Ngày ${new Date().getDate()}, tháng ${
+              new Date().getMonth() + 1
+            }, năm ${new Date().getFullYear()}`}</Text>
+            <Text style={styles.createdReport}>Người tạo báo cáo</Text>
+          </View>
+          <View style={styles.approval}>
+            <Text>Người phê duyệt</Text>
+          </View>
+        </View>
+      </Page>
+    </Document>
+  );
   componentDidMount() {
     axios({
       method: "get",
@@ -121,8 +367,6 @@ class DuyetDeXuatThanhToan extends Component {
   onChange = (event) => {
     var name = event.target.name;
     var value = event.target.value;
-    console.log(name);
-    console.log(value);
     this.setState({
       [name]: value,
     });
@@ -158,7 +402,6 @@ class DuyetDeXuatThanhToan extends Component {
       if (item.maChuyenCongTac === valueMaChuyenCongTac)
         getMaChuyenCongTacChiTiet = item.maChuyenCongTac;
     });
-    console.log(getMaChuyenCongTacChiTiet); // lay ra ma chuyen cong tac tuong ung voi chi tiet
 
     axios({
       method: "get",
@@ -194,34 +437,8 @@ class DuyetDeXuatThanhToan extends Component {
         window.location.reload();
       })
       .catch((err) => this.props.alertOn_TrangThaiDuyetThatBai(err));
-
-    console.log(this.state.data);
-
-    // var dataDuyet = [];
-    // dataDuyet.maDeXuat = value.maDeXuat //this.state.hienThiSuaUer.maPhongBan là data onChange nhập vào
-    // dataDuyet.tenChuyenCongTac = value.tenChuyenCongTac;
-    // dataDuyet.soNhanVien = value.soNhanVien;
-    // dataDuyet.thoiGianDeXuat = value.thoiGianDeXuat;
-    // dataDuyet.tongChiPhi = value.tongChiPhi;
-    // dataDuyet.lyDo = value.lyDo;
-    // dataDuyet.tinhTrang = value.tinhTrang;
-    // console.log(dataDuyet);
-
-    // // console.log(dataSua);
-    // this.setState({ dataDuyet: dataDuyet });
-    // this.state.data.forEach((value) => {
-    //     if (value.maDeXuat === dataDuyet.maDeXuat) {
-    //         value.tenChuyenCongTac = dataDuyet.tenChuyenCongTac;
-    //         value.soNhanVien = dataDuyet.soNhanVien;
-    //         value.thoiGianDeXuat = dataDuyet.thoiGianDeXuat;
-    //         value.tongChiPhi = dataDuyet.tongChiPhi;
-    //         value.lyDo = dataDuyet.lyDo;
-    //         value.tinhTrang = dataDuyet.tinhTrang;
-    //     }
-    // })
   };
   layMaTuChoi = (maDeXuat) => {
-    console.log(maDeXuat);
     this.setState({ layMaTuChoi: maDeXuat });
   };
   tuChoiDeXuat = () => {
@@ -242,54 +459,49 @@ class DuyetDeXuatThanhToan extends Component {
         window.location.reload();
       })
       .catch((err) => this.props.alertOn_TrangThaiTuChoiDuyetThatBai(err));
-
-    console.log(this.state.data);
   };
-  onChangeChonThoiGian = (event) => {
-    var name = event.target.name;
-    var value = event.target.value;
-    // console.log(name);
-    // console.log(value);
-    this.setState({
-      [name]: value,
-    });
 
-    this.setState({ time: value });
-    // var selectTime = [];
-
-    // this.state.data.forEach((item) => {
-    //     if (item.thoiGianDeXuat.indexOf(value) !== -1) {
-    //         selectTime.push(item)
-    //     }
-    // })
-    // console.log(selectTime)
-    // console.log(this.state.data);
-  };
   printData = () => {
     var { data, searchItem } = this.state;
     var dataSearch = [];
     var layMaChuyenCongTac = [];
     data.forEach((item) => {
-      if (item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) {
+      if (
+        (item.maDeXuat &&
+          item.maDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenNhanVien &&
+          item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.ngayBatDau &&
+          moment(item.ngayBatDau)
+            .format("YYYY")
+            .toString()
+            .indexOf(searchItem) !== -1) ||
+        (item.ngayKetThuc &&
+          moment(item.ngayKetThuc)
+            .format("YYYY")
+            .toString()
+            .indexOf(searchItem) !== -1) ||
+        (item.tongChiPhi &&
+          item.tongChiPhi.toString().toLowerCase().indexOf(searchItem) !==
+            -1) ||
+        (item.tinhTrang &&
+          item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.lyDo && item.lyDo.toLowerCase().indexOf(searchItem) !== -1)
+      ) {
         dataSearch.push(item);
         layMaChuyenCongTac.push(item.maChuyenCongTac);
       }
     });
-    // console.log(layMaChuyenCongTac);
     var getDataNhanVienCongTac = [];
     this.state.dataNhanVienCongTac.forEach((item) => {
       if (item.maChuyenCongTac === this.state.layMaChuyenCongTac)
         getDataNhanVienCongTac.push(item);
     });
-    // console.log(getDataNhanVienCongTac);
     // tìm kiếm theo select thời gian
-    var selectTime = [];
-    this.state.data.forEach((item) => {
-      if (item.ngayBatDau.indexOf(this.state.time) !== -1) {
-        selectTime.push(item);
-      }
-    });
-    return selectTime.map((value, key) => (
+
+    return dataSearch.map((value, key) => (
       <tr className="tr__canGiua">
         {/* <td>đã thực hiện</td> */}
         <td>{key + 1}</td>
@@ -426,16 +638,7 @@ class DuyetDeXuatThanhToan extends Component {
     ));
   };
 
-  handleYearReport = () => {
-    const curYear = new Date().getFullYear();
-    const arrYear = [];
-    for (var i = curYear; i >= curYear - 5; i--) {
-      arrYear.push(i);
-    }
-    return arrYear.map((e) => <option>{e}</option>);
-  };
   render() {
-    console.log(this.state.dataUsers);
     return (
       <div>
         <Header></Header>
@@ -446,48 +649,49 @@ class DuyetDeXuatThanhToan extends Component {
               <i></i> Báo cáo
             </div>
             <div className="d-flex justify-content-between">
-              <div style={{ width: "20%" }}>
-                <select
-                  class="form-select form-control"
-                  aria-label="Default select example"
-                  name="chonThoiGian"
-                  onChange={(event) => this.onChangeChonThoiGian(event)}
-                >
-                  <option selected>Chọn thời gian</option>
-                  {this.handleYearReport()}
-                </select>
-              </div>
-              {/* <div className="form-group ">
-                                <div className="input-group">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text" >
-                                            <i class="fas fa-search"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" className="form-control" placeholder="Search ..." name="searchItem" value={this.state.searchItem} onChange={(event) => this.onChange(event)} />
-                                </div>
-                            </div> */}
-              {/* end search */}
-              <ReactToPdf
-                targetRef={ref}
-                filename="baocao.pdf"
-                options={options}
-                x={0.5}
-                y={0.5}
-                scale={0.7}
-              >
-                {({ toPdf }) => (
-                  // <button onClick={toPdf}>Generate pdf</button>
-                  <div className="btn btn-primary themmoi " onClick={toPdf}>
-                    Xuất file PDF
+              <div className="form-group filter">
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">
+                      <i class="fas fa-search"></i>
+                    </span>
                   </div>
-                )}
-              </ReactToPdf>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search ..."
+                    name="searchItem"
+                    value={this.state.searchItem}
+                    onChange={(event) => this.onChange(event)}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  marginRight: 44,
+                  marginTop: 8,
+                }}
+              >
+                <button className="btn btn-primary  ">
+                  <PDFDownloadLink
+                    style={{
+                      color: "#fff",
+                      textDecoration: "none",
+                      fontSize: 16,
+                    }}
+                    document={this.myDocument()}
+                    fileName="report.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? "Loading ..." : "Export PDF"
+                    }
+                  </PDFDownloadLink>
+                </button>
+              </div>
             </div>
             <div
               className="row mt-3"
               style={{ width: "101%", height: "600px", overflow: "auto" }}
-              ref={ref}
             >
               <div className="col ">
                 <table className="table table-striped table-hover">
