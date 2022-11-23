@@ -19,6 +19,7 @@ class QuanLyChuyenCongTac extends Component {
       ngayBatDau: "",
       ngayKetThuc: "",
       diaDiem: "",
+      mucDichCongTac: "",
       moTa: "",
       searchItem: "",
       hienThiSuaUer: [],
@@ -31,8 +32,6 @@ class QuanLyChuyenCongTac extends Component {
   onChange = (event) => {
     var name = event.target.name;
     var value = event.target.value;
-    console.log(name);
-    console.log(value);
     this.setState({
       [name]: value,
     });
@@ -86,6 +85,7 @@ class QuanLyChuyenCongTac extends Component {
     item.maChuyenCongTac = this.state.maChuyenCongTac;
     item.tenChuyenCongTac = this.state.tenChuyenCongTac;
     item.diaDiem = this.state.diaDiem;
+    item.mucDichCongTac = this.state.mucDichCongTac;
     item.ngayBatDau = this.state.ngayBatDau;
     item.ngayKetThuc = this.state.ngayKetThuc;
     item.moTa = this.state.moTa;
@@ -93,6 +93,7 @@ class QuanLyChuyenCongTac extends Component {
     // items.push(item)
     this.setState({ data: items });
 
+    console.log(items);
     axios({
       method: "POST",
       url: "https://localhost:5001/api/ChuyenCongTac",
@@ -102,6 +103,7 @@ class QuanLyChuyenCongTac extends Component {
         ngayBatDau: this.state.ngayBatDau,
         ngayKetThuc: this.state.ngayKetThuc,
         diaDiem: this.state.diaDiem,
+        mucDichCongTac: this.state.mucDichCongTac,
         moTa: this.state.moTa,
         trangThai: "",
       },
@@ -122,7 +124,6 @@ class QuanLyChuyenCongTac extends Component {
   };
   layDataSua = (value) => {
     this.setState({ hienThiSuaUer: value });
-    console.log(this.state.hienThiSuaUer);
   };
 
   onSua = () => {
@@ -135,29 +136,31 @@ class QuanLyChuyenCongTac extends Component {
       dataSua.diaDiem = this.state.diaDiem
         ? this.state.diaDiem
         : this.state.hienThiSuaUer.diaDiem;
+      dataSua.mucDichCongTac = this.state.mucDichCongTac
+        ? this.state.mucDichCongTac
+        : this.state.hienThiSuaUer.mucDichCongTac;
       dataSua.ngayBatDau = this.state.ngayBatDau
         ? this.state.ngayBatDau
-        : this.state.hienThiSuaUer.ngayBatDau;
+        : moment(this.state.hienThiSuaUer.ngayBatDau).format("YYYY-MM-DD");
       dataSua.ngayKetThuc = this.state.ngayKetThuc
         ? this.state.ngayKetThuc
-        : this.state.hienThiSuaUer.ngayKetThuc;
+        : moment(this.state.hienThiSuaUer.ngayKetThuc).format("YYYY-MM-DD");
       dataSua.moTa = this.state.moTa
         ? this.state.moTa
         : this.state.hienThiSuaUer.moTa;
 
       this.setState({ dataSua: dataSua });
-      console.log(dataSua.ngayBatDau);
-      console.log(dataSua.ngayKetThuc);
+
       this.state.data.forEach((value) => {
         if (value.maChuyenCongTac === dataSua.maChuyenCongTac) {
           value.tenChuyenCongTac = dataSua.tenChuyenCongTac;
           value.diaDiem = dataSua.diaDiem;
+          value.mucDichCongTac = dataSua.mucDichCongTac;
           value.ngayBatDau = dataSua.ngayBatDau;
           value.ngayKetThuc = dataSua.ngayKetThuc;
           value.moTa = dataSua.moTa;
         }
       });
-      console.log(this.state.data);
 
       axios({
         method: "PUT",
@@ -170,12 +173,15 @@ class QuanLyChuyenCongTac extends Component {
           diaDiem: this.state.diaDiem
             ? this.state.diaDiem
             : this.state.hienThiSuaUer.diaDiem,
+          mucDichCongTac: this.state.mucDichCongTac
+            ? this.state.mucDichCongTac
+            : this.state.hienThiSuaUer.mucDichCongTac,
           ngayBatDau: this.state.ngayBatDau
             ? this.state.ngayBatDau
-            : this.state.hienThiSuaUer.ngayBatDau,
+            : moment(this.state.hienThiSuaUer.ngayBatDau).format("YYYY-MM-DD"),
           ngayKetThuc: this.state.ngayKetThuc
             ? this.state.ngayKetThuc
-            : this.state.hienThiSuaUer.ngayKetThuc,
+            : moment(this.state.hienThiSuaUer.ngayKetThuc).format("YYYY-MM-DD"),
           moTa: this.state.moTa
             ? this.state.moTa
             : this.state.hienThiSuaUer.moTa,
@@ -215,7 +221,6 @@ class QuanLyChuyenCongTac extends Component {
   };
   onDeleteNhanVienCongTac = (maNhanVien) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa")) {
-      // console.log(maPhongBan);
       var tempData = this.state.dataNhanVienCongTac.filter(
         (item) => item.maNhanVien !== maNhanVien
       );
@@ -236,7 +241,25 @@ class QuanLyChuyenCongTac extends Component {
     this.setState({ layMaChuyenCongTac: valueMaChuyenCongTac });
     this.setState({ layDataChiTiet: value });
   };
+
+  dataPurpose = () => {
+    const data = [
+      "Kí kết hợp đồng",
+      "Tìm kiếm cơ hội hợp tác",
+      "Học tập",
+      "Công tác, trao đổi nghiệp vụ trong thành phố Hà Nội",
+      "Công tác, trao đổi nghiệp vụ ngoài thành phố Hà Nội",
+      "Công tác, trao đổi nghiệp vụ ở nước ngoài",
+    ];
+    return data.map((value, key) => (
+      <option selected={value === this.state.hienThiSuaUer?.mucDichCongTac}>
+        {value}
+      </option>
+    ));
+  };
+
   printData = () => {
+    console.log(this.state.data);
     var { data, searchItem } = this.state;
     var dataSearch = [];
     var layMaChuyenCongTac = [];
@@ -247,6 +270,7 @@ class QuanLyChuyenCongTac extends Component {
         item.ngayBatDau.toLowerCase().indexOf(searchItem) !== -1 ||
         item.ngayKetThuc.toLowerCase().indexOf(searchItem) !== -1 ||
         item.diaDiem.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.mucDichCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
         item.moTa.toLowerCase().indexOf(searchItem) !== -1
       ) {
         dataSearch.push(item);
@@ -267,6 +291,7 @@ class QuanLyChuyenCongTac extends Component {
         <td>{value.ngayBatDau}</td>
         <td>{value.ngayKetThuc}</td>
         <td>{value.diaDiem}</td>
+        <td>{value.mucDichCongTac}</td>
         <td>{value.moTa}</td>
         <td>
           <a
@@ -408,7 +433,6 @@ class QuanLyChuyenCongTac extends Component {
                                     "Chua thuc hien" && <th>Thao tác</th>}
                                 </tr>
                               </thead>
-                              {console.log(this.state.layDataChiTiet)}
                               <tbody>
                                 {getDataNhanVienCongTac.map((value, key) => (
                                   <tr className="tr__canGiua">
@@ -486,7 +510,6 @@ class QuanLyChuyenCongTac extends Component {
     }
   };
   hienThiBtnSua_Xoa = (value) => {
-    console.log(this.state.hienThiSuaUer.ngayBatDau);
     if (
       this.state.dataUsers.roleID === "RL01" ||
       this.state.dataUsers.roleID === "RL05" ||
@@ -532,9 +555,6 @@ class QuanLyChuyenCongTac extends Component {
                         <div className="form-group">
                           <div className="row">
                             <div className="col-6">
-                              {/* <p style={{ textAlign: 'left' }}>Mã chuyến công tác</p>
-                                                            <input type="text" className="form-control" name id aria-describedby="helpId" placeholder="Mã chuyến công tác" name="maChuyenCongTac" Value={this.state.hienThiSuaUer.maChuyenCongTac} onChange={(value) => this.onChange(value)} />
-                                                            */}
                               <p style={{ textAlign: "left" }}>
                                 Tên chuyến công tác
                               </p>
@@ -555,12 +575,21 @@ class QuanLyChuyenCongTac extends Component {
                                 type="text"
                                 className="form-control"
                                 id
-                                // aria-describedby="helpId"
                                 placeholder="Địa điểm"
                                 name="diaDiem"
                                 defaultValue={this.state.hienThiSuaUer.diaDiem}
                                 onChange={(value) => this.onChange(value)}
-                              />
+                              />{" "}
+                              <p style={{ textAlign: "left" }}>Mục đích</p>
+                              <select
+                                class="form-select form-control"
+                                aria-label="Default select example"
+                                name="mucDichCongTac"
+                                onChange={(event) => this.onChange(event)}
+                              >
+                                <option selected>Chọn mục đích</option>
+                                {this.dataPurpose()}
+                              </select>
                             </div>
                             <div className="col-6">
                               <p style={{ textAlign: "left" }}>
@@ -571,12 +600,17 @@ class QuanLyChuyenCongTac extends Component {
                                 type="date"
                                 className="form-control"
                                 id="datetimepicker1"
-                                aria-describedby="helpId"
                                 placeholder="Thời gian bắt đầu"
                                 name="ngayBatDau"
-                                defaultValue={moment(
-                                  this.state.hienThiSuaUer.ngayBatDau
-                                ).format("YYYY-MM-DD")}
+                                value={
+                                  this.state.ngayBatDau
+                                    ? this.state.ngayBatDau
+                                    : moment(
+                                        new Date(
+                                          this.state.hienThiSuaUer.ngayBatDau
+                                        )
+                                      ).format("YYYY-MM-DD")
+                                }
                                 onChange={(value) => this.onChange(value)}
                               />
 
@@ -590,10 +624,15 @@ class QuanLyChuyenCongTac extends Component {
                                 aria-describedby="helpId"
                                 placeholder="Thời gian kết thúc"
                                 name="ngayKetThuc"
-                                defaultValue={moment(
-                                  this.state.hienThiSuaUer.ngayKetThuc
-                                ).format("YYYY-MM-DD")}
-                                data-date-format="dd/mm/yyyy"
+                                value={
+                                  this.state.ngayKetThuc
+                                    ? this.state.ngayKetThuc
+                                    : moment(
+                                        new Date(
+                                          this.state.hienThiSuaUer.ngayKetThuc
+                                        )
+                                      ).format("YYYY-MM-DD")
+                                }
                                 onChange={(value) => this.onChange(value)}
                               />
                               <p style={{ textAlign: "left" }}>Mô tả</p>
@@ -771,6 +810,16 @@ class QuanLyChuyenCongTac extends Component {
                                     name="diaDiem"
                                     onChange={(value) => this.onChange(value)}
                                   />
+                                  <p style={{ textAlign: "left" }}>Mục Đích</p>
+                                  <select
+                                    class="form-select form-control"
+                                    aria-label="Default select example"
+                                    name="mucDichCongTac"
+                                    onChange={(event) => this.onChange(event)}
+                                  >
+                                    <option selected>Chọn mục đích</option>
+                                    {this.dataPurpose()}
+                                  </select>
                                 </div>
                                 <div className="col-6">
                                   <p style={{ textAlign: "left" }}>
@@ -853,6 +902,7 @@ class QuanLyChuyenCongTac extends Component {
                       <th>Thời gian bắt đầu</th>
                       <th>Thời gian kết thúc</th>
                       <th>Địa điểm</th>
+                      <th>Mục đích</th>
                       <th>Mô tả</th>
                       <th style={{ minWidth: "80px" }}>Chi tiết</th>
                       <th style={{ minWidth: "135px" }}>Trạng thái</th>

@@ -1,29 +1,32 @@
 import {
   BrowserRouter as Router,
-  Redirect,
-  Route,
   Switch,
+  Route,
+  Link,
+  Redirect,
 } from "react-router-dom";
 import "../css/App.css";
 // import Nav from './Nav';
-import axios from "axios";
-import React, { Component } from "react";
 import { connect } from "react-redux";
+import React, { Component } from "react";
 import Home from "../components/Home";
-import BaoCaoLanhDao from "./BaoCaoLanhDao";
-import BaoCaoNhanVien from "./BaoCaoNhanVien";
-import BaoCaoTruongBoPhan from "./BaoCaoTruongBoPhan";
-import DuyetDeXuatThanhToan from "./DuyetDeXuatThanhToan";
-import Login from "./Login";
-import NhanVienCongTac from "./NhanVienCongTac";
-import QuanLyCapBac from "./QuanLyCapBac";
-import QuanLyChiPhi from "./QuanLyChiPhi";
-import QuanLyChuyenCongTac from "./QuanLyChuyenCongTac";
-import QuanLyDeXuatThanhToan from "./QuanLyDeXuatThanhToan";
-import QuanLyDinhMuc from "./QuanLyDinhMuc";
 import QuanLyNhanVien from "./QuanLyNhanVien";
 import QuanLyPhongBan from "./QuanLyPhongBan";
+import QuanLyChiPhi from "./QuanLyChiPhi";
+import QuanLyDinhMuc from "./QuanLyDinhMuc";
+import QuanLyCapBac from "./QuanLyCapBac";
+import Login from "./Login";
+import QuanLyChuyenCongTac from "./QuanLyChuyenCongTac";
+import NhanVienCongTac from "./NhanVienCongTac";
+import QuanLyDeXuatThanhToan from "./QuanLyDeXuatThanhToan";
+import DuyetDeXuatThanhToan from "./DuyetDeXuatThanhToan";
 import QuanLyThanhToan from "./QuanLyThanhToan";
+import BaoCaoNhanVien from "./BaoCaoNhanVien";
+import BaoCaoTruongBoPhan from "./BaoCaoTruongBoPhan";
+import BaoCaoLanhDao from "./BaoCaoLanhDao";
+
+import Footer from "./Footer";
+import Header from "./Header";
 
 import AlertComponents from "./AlertComponents";
 class App extends Component {
@@ -32,29 +35,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false,
+      isLogin: localStorage.getItem("token") != null,
     };
   }
   onLogin = () => {
     alert("ok");
   };
-
-  componentDidMount() {
-    axios({
-      method: "get",
-      url: "https://localhost:5001/api/Users",
-      data: null,
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((res) => {
-        this.setState({ isLogin: true });
-      })
-      .catch((err) => {
-        this.setState({ isLogin: false });
-      });
-  }
 
   render() {
     return (
@@ -67,7 +53,7 @@ class App extends Component {
               <Route
                 path="/login"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <Redirect to="/home" />
                   ) : (
                     <Login />
@@ -78,7 +64,7 @@ class App extends Component {
                 exact
                 path="/"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <Redirect to="/home" />
                   ) : (
                     <Redirect to="/login" />
@@ -89,7 +75,7 @@ class App extends Component {
                 exact
                 path="/home"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <Home />
                   ) : (
                     <Redirect to="/login" />
@@ -99,7 +85,7 @@ class App extends Component {
               <Route
                 path="/quanlyphongban"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyPhongBan />
                   ) : (
                     <Redirect to="/login" />
@@ -112,7 +98,7 @@ class App extends Component {
               <Route
                 path="/quanlynhanvien"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyNhanVien />
                   ) : (
                     <Redirect to="/login" />
@@ -123,7 +109,7 @@ class App extends Component {
               <Route
                 path="/quanlycapbac"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyCapBac />
                   ) : (
                     <Redirect to="/login" />
@@ -133,7 +119,7 @@ class App extends Component {
               <Route
                 path="/quanlychiphi"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyChiPhi />
                   ) : (
                     <Redirect to="/login" />
@@ -143,7 +129,7 @@ class App extends Component {
               <Route
                 path="/quanlydinhmuc"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyDinhMuc />
                   ) : (
                     <Redirect to="/login" />
@@ -153,7 +139,7 @@ class App extends Component {
               <Route
                 path="/quanlychuyencongtac"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyChuyenCongTac />
                   ) : (
                     <Redirect to="/login" />
@@ -163,7 +149,7 @@ class App extends Component {
               <Route
                 path="/quanlydexuatthanhtoan"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyDeXuatThanhToan />
                   ) : (
                     <Redirect to="/login" />
@@ -173,7 +159,7 @@ class App extends Component {
               <Route
                 path="/duyetdexuatthanhtoan"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <DuyetDeXuatThanhToan />
                   ) : (
                     <Redirect to="/login" />
@@ -183,7 +169,7 @@ class App extends Component {
               <Route
                 path="/quanlythanhtoan"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <QuanLyThanhToan />
                   ) : (
                     <Redirect to="/login" />
@@ -193,7 +179,7 @@ class App extends Component {
               <Route
                 path="/nhanviencongtac"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <NhanVienCongTac />
                   ) : (
                     <Redirect to="/login" />
@@ -203,7 +189,7 @@ class App extends Component {
               <Route
                 path="/baocaonhanvien"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <BaoCaoNhanVien />
                   ) : (
                     <Redirect to="/login" />
@@ -213,7 +199,7 @@ class App extends Component {
               <Route
                 path="/baocaotruongbophan"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <BaoCaoTruongBoPhan />
                   ) : (
                     <Redirect to="/login" />
@@ -223,7 +209,7 @@ class App extends Component {
               <Route
                 path="/baocaolanhdao"
                 render={() => {
-                  return this.state.isLogin ? (
+                  return localStorage.getItem("token") ? (
                     <BaoCaoLanhDao />
                   ) : (
                     <Redirect to="/login" />

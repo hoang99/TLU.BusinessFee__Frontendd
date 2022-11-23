@@ -469,6 +469,8 @@ class QuanLyDeXuatThanhToan extends Component {
           item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.tenChuyenCongTac &&
           item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.mucDichCongTac &&
+          item.mucDichCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.lydo && item.lydo.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.thoiGianDeXuat &&
           item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
@@ -485,6 +487,7 @@ class QuanLyDeXuatThanhToan extends Component {
         <td>{value.maDeXuat}</td>
         <td>{value.tenNhanVien}</td>
         <td>{value.tenChuyenCongTac}</td>
+        <td>{value.mucDichCongTac}</td>
         <td>{value.soNhanVien}</td>
         <td>{value.thoiGianDeXuat}</td>
         <td>{value.tongTien}</td>
@@ -909,6 +912,7 @@ class QuanLyDeXuatThanhToan extends Component {
                       <th>Mã đề xuất</th>
                       <th>Nhân viên đề xuất</th>
                       <th>Tên CCT</th>
+                      <th>Mục đích</th>
                       <th>Số nhân viên</th>
                       <th>Thời gian đề xuất</th>
                       <th>Tổng chi phí</th>

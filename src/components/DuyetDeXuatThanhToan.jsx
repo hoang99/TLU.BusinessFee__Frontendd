@@ -227,6 +227,7 @@ class DuyetDeXuatThanhToan extends Component {
         item.maDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
         item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1 ||
         item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1 ||
+        item.mucDichCongTac?.toLowerCase().indexOf(searchItem) !== -1 ||
         item.thoiGianDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
         item.tinhTrang?.toLowerCase().indexOf(searchItem) !== -1 ||
         (item.lyDo && item.lyDo?.toLowerCase().indexOf(searchItem) !== -1)
@@ -249,6 +250,7 @@ class DuyetDeXuatThanhToan extends Component {
         <td>{key + 1}</td>
         <td>{value.maDeXuat}</td>
         <td>{value.tenChuyenCongTac}</td>
+        <td>{value.mucDichCongTac}</td>
         <td>{value.soNhanVien}</td>
         <td>{value.thoiGianDeXuat}</td>
         <td>{value.tongChiPhi}</td>
@@ -622,6 +624,7 @@ class DuyetDeXuatThanhToan extends Component {
                       <th>STT</th>
                       <th>Mã đề xuất</th>
                       <th>Tên CCT</th>
+                      <th>Mục đích</th>
                       <th>Số nhân viên</th>
                       <th>Thời gian đề xuất</th>
                       <th>Tổng chi phí</th>

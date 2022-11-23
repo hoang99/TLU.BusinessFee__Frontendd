@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   tableCol: {
-    width: "11.25%",
+    width: "10%",
     borderStyle: "solid",
     borderWidth: 1,
     borderLeftWidth: 0,
@@ -142,11 +142,11 @@ class BaoCaoNhanVien extends Component {
         <View style={styles.header}>
           <View style={styles.textLeft}>
             <Text style={{ fontSize: 13, fontWeight: "bold" }}>
-              BỘ GIÁO DỤC VÀ ĐÀO TẠO
+              CÔNG TY CỔ PHẦN TECHASIANS
             </Text>
-            <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+            {/* <Text style={{ fontSize: 13, fontWeight: "bold" }}>
               Trường đại học Kinh tế quốc dân
-            </Text>
+            </Text> */}
             <Image style={styles.image} src={myIcon} />
           </View>
           <View style={styles.textRight}>
@@ -175,6 +175,9 @@ class BaoCaoNhanVien extends Component {
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Tên CTT</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}>Mục đích</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Nhân viên DX</Text>
@@ -211,6 +214,9 @@ class BaoCaoNhanVien extends Component {
                   <Text style={styles.tableCell}>{value.tenChuyenCongTac}</Text>
                 </View>
                 <View style={styles.tableCol}>
+                  <Text style={styles.tableCell}>{value.mucDichCongTac}</Text>
+                </View>
+                <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>{value.tenNhanVien}</Text>
                 </View>
                 <View style={styles.colWidth}>
@@ -242,6 +248,9 @@ class BaoCaoNhanVien extends Component {
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>Tổng chi phí</Text>
+            </View>
+            <View style={styles.tableCol}>
+              <Text style={styles.tableCell}></Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}></Text>
@@ -695,6 +704,8 @@ class BaoCaoNhanVien extends Component {
           item.maDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.tenChuyenCongTac &&
           item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.mucDichCongTac &&
+          item.mucDichCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.tenNhanVien &&
           item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.ngayBatDau &&
@@ -722,6 +733,7 @@ class BaoCaoNhanVien extends Component {
       <tr className="tr__canGiua">
         <td>{key + 1}</td>
         <td>{value.tenChuyenCongTac}</td>
+        <td>{value.mucDichCongTac}</td>
         <td>{value.soNhanVien}</td>
         <td>{value.ngayBatDau}</td>
         <td>{value.ngayKetThuc}</td>
@@ -1001,6 +1013,7 @@ class BaoCaoNhanVien extends Component {
                       <th>STT</th>
 
                       <th>Tên CCT</th>
+                      <th>Mục đích</th>
                       <th>Số nhân viên</th>
                       <th>Ngày bắt đầu</th>
                       <th>Ngày kết thúc</th>
