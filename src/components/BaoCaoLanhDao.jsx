@@ -233,7 +233,7 @@ class DuyetDeXuatThanhToan extends Component {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {value.tongChiPhi.toLocaleString()}
+                    {value.tongChiPhi?.toLocaleString()}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>

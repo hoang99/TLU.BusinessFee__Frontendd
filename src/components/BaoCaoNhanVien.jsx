@@ -230,7 +230,7 @@ class BaoCaoNhanVien extends Component {
                 </View>
                 <View style={styles.tableCol}>
                   <Text style={styles.tableCell}>
-                    {value.tongChiPhi.toLocaleString()}
+                    {value.tongTien?.toLocaleString()}
                   </Text>
                 </View>
                 <View style={styles.tableCol}>
@@ -270,7 +270,7 @@ class BaoCaoNhanVien extends Component {
             <View style={styles.tableCol}>
               <Text style={styles.tableCell}>
                 {this.state.data
-                  .reduce((sum, value) => (sum += value.tongChiPhi), 0)
+                  .reduce((sum, value) => (sum += value.tongTien), 0)
                   .toLocaleString()}
               </Text>
             </View>
@@ -578,10 +578,11 @@ class BaoCaoNhanVien extends Component {
       <option>{value.tenChuyenCongTac}</option>
     ));
   };
-  tenNhanVienDeXuat = () => {
+  getTenNhanVienDeXuat = () => {
+    console.log(this.state.dataUsers);
     var tenNhanVienDeXuat = "";
     this.state.dataNhanVien.map((value, key) => {
-      if (this.state.dataUsers === value.maNhanVien) {
+      if (this.state.dataUsers?.maNhanVien === value.maNhanVien) {
         tenNhanVienDeXuat = value.tenNhanVien;
       }
     });
@@ -728,7 +729,11 @@ class BaoCaoNhanVien extends Component {
         dataSearch.push(item);
       }
     });
-
+    var getDataNhanVienCongTac = [];
+    this.state.dataNhanVienCongTac.forEach((item) => {
+      if (item.maChuyenCongTac === this.state.layMaChuyenCongTac)
+        getDataNhanVienCongTac.push(item);
+    });
     return dataSearch.map((value, key) => (
       <tr className="tr__canGiua">
         <td>{key + 1}</td>
@@ -787,7 +792,7 @@ class BaoCaoNhanVien extends Component {
                             <p style={{ textAlign: "left" }}>
                               Nhân viên đề xuất
                             </p>
-                            {this.tenNhanVienDeXuat()}
+                            {this.getTenNhanVienDeXuat()}
                           </div>
                           <div className="col-6">
                             {/* begin row thông tin nhân viên công tác */}
@@ -858,7 +863,6 @@ class BaoCaoNhanVien extends Component {
   };
   onDeleteDeXuatThanhToan = (maDeXuat) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa")) {
-      // console.log(maPhongBan);
       var tempData = this.state.data.filter(
         (item) => item.maDeXuat !== maDeXuat
       );

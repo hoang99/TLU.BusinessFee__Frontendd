@@ -125,7 +125,7 @@ class QuanLyDeXuatThanhToan extends Component {
       });
     axios({
       method: "get",
-      url: "https://localhost:5001/api/ChuyenCongTac",
+      url: "https://localhost:5001/api/ChuyenCongTac/getallnoDX",
       data: null,
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
