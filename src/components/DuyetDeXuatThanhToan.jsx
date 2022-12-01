@@ -224,12 +224,18 @@ class DuyetDeXuatThanhToan extends Component {
 
     data.forEach((item) => {
       if (
-        item.maDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.mucDichCongTac?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.thoiGianDeXuat?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tinhTrang?.toLowerCase().indexOf(searchItem) !== -1 ||
+        (item.maDeXuat &&
+          item.maDeXuat?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenNhanVien &&
+          item.tenNhanVien?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.mucDichCongTac &&
+          item.mucDichCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.thoiGianDeXuat &&
+          item.thoiGianDeXuat?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tinhTrang &&
+          item.tinhTrang?.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.lyDo && item.lyDo?.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);

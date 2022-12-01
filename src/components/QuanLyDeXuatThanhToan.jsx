@@ -473,6 +473,8 @@ class QuanLyDeXuatThanhToan extends Component {
           item.mucDichCongTac?.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.lydo && item.lydo.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.thoiGianDeXuat &&
+          item.tongTien.toString().toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tongTien &&
           item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
         (item.tinhTrang &&
           item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1)

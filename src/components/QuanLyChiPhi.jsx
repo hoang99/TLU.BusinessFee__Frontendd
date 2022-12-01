@@ -158,9 +158,11 @@ class QuanLyChiPhi extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.maChiPhi.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChiPhi.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.moTa.toLowerCase().indexOf(searchItem) !== -1
+        (item.maChiPhi &&
+          item.maChiPhi.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChiPhi &&
+          item.tenChiPhi.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.moTa && item.moTa.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

@@ -265,11 +265,16 @@ class QuanLyThanhToan extends Component {
     var layMaChuyenCongTac = [];
     data.forEach((item) => {
       if (
-        item.maHoaDon.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.maDeXuat.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1
+        (item.maHoaDon &&
+          item.maHoaDon.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.maDeXuat &&
+          item.maDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.thoiGianDeXuat &&
+          item.thoiGianDeXuat.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tinhTrang &&
+          item.tinhTrang.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
 

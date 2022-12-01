@@ -264,11 +264,16 @@ class QuanLyNhanVien extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.maNhanVien.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenPhongBan.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChucVu.toLowerCase().indexOf(searchItem) !== -1
+        (item.maNhanVien &&
+          item.maNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenNhanVien &&
+          item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenCapBac &&
+          item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenPhongBan &&
+          item.tenPhongBan.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChucVu &&
+          item.tenChucVu.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

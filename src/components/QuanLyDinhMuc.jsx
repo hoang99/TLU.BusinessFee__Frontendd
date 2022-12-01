@@ -258,10 +258,13 @@ class QuanLyDinhMuc extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.tenChiPhi.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.soTienDinhMuc.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.donVi.toLowerCase().indexOf(searchItem) !== -1
+        (item.tenChiPhi &&
+          item.tenChiPhi.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenCapBac &&
+          item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.soTienDinhMuc &&
+          item.soTienDinhMuc.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.donVi && item.donVi.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

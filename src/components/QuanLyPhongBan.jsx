@@ -153,9 +153,12 @@ class QuanLyPhongBan extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.tenPhongBan.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.maPhongBan.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.ngayThanhLap.toLowerCase().indexOf(searchItem) !== -1
+        (item.tenPhongBan &&
+          item.tenPhongBan.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.maPhongBan &&
+          item.maPhongBan.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.ngayThanhLap &&
+          item.ngayThanhLap.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

@@ -156,9 +156,11 @@ class QuanLyCapBac extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.tenCapBac?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.maCapBac?.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.moTa?.toLowerCase().indexOf(searchItem) !== -1
+        (item.tenCapBac &&
+          item.tenCapBac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.maCapBac &&
+          item.maCapBac?.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.moTa && item.moTa?.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

@@ -253,8 +253,10 @@ class NhanVienCongTac extends Component {
     var dataSearch = [];
     data.forEach((item) => {
       if (
-        item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1
+        (item.tenNhanVien &&
+          item.tenNhanVien.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
       }

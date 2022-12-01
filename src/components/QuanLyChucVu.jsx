@@ -142,7 +142,10 @@ class QuanLyCapBac extends Component {
     var { data, searchItem } = this.state;
     var dataSearch = [];
     data.forEach((item) => {
-      if (item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1) {
+      if (
+        item.tenCapBac &&
+        item.tenCapBac.toLowerCase().indexOf(searchItem) !== -1
+      ) {
         dataSearch.push(item);
       }
     });

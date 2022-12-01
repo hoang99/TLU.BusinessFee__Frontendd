@@ -265,13 +265,19 @@ class QuanLyChuyenCongTac extends Component {
     var layMaChuyenCongTac = [];
     data.forEach((item) => {
       if (
-        item.maChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.ngayBatDau.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.ngayKetThuc.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.diaDiem.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.mucDichCongTac.toLowerCase().indexOf(searchItem) !== -1 ||
-        item.moTa.toLowerCase().indexOf(searchItem) !== -1
+        (item.maChuyenCongTac &&
+          item.maChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.tenChuyenCongTac &&
+          item.tenChuyenCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.ngayBatDau &&
+          item.ngayBatDau.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.ngayKetThuc &&
+          item.ngayKetThuc.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.diaDiem &&
+          item.diaDiem.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.mucDichCongTac &&
+          item.mucDichCongTac.toLowerCase().indexOf(searchItem) !== -1) ||
+        (item.moTa && item.moTa.toLowerCase().indexOf(searchItem) !== -1)
       ) {
         dataSearch.push(item);
         layMaChuyenCongTac.push(item.maChuyenCongTac);
